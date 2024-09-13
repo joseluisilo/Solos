@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Juego: Adivina el Número</title>
+    <link rel="manifest" href="/manifest.json">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background: #2c3e50;
+            color: #ecf0f1;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        .container {
+            width: 100%;
+            max-width: 300px;
+            margin: 20px auto;
+            background: #34495e;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
+            position: relative;
+            animation: bounceIn 1s ease-out;
+        }
+        @keyframes bounceIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: scale(1); }
+        }
+        h1 {
+            font-size: 24px;
+            color: #e74c3c;
+            margin-bottom: 10px;
+        }
+        p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+        input[type="number"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            font-size: 16px;
+            background: #ecf0f1;
+            color: #2c3e50;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            transition: background 0.3s, transform 0.2s;
+        }
+        input[type="number"]:focus {
+            background: #fff;
+            transform: scale(1.05);
+        }
+        button {
+            background-color: #e74c3c;
+            color: #fff;
+            border: none;
+            padding: 15px;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            width: 100%;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            transition: background 0.3s, transform 0.2s;
+        }
+        button:hover {
+            background-color: #c0392b;
+            transform: scale(1.1);
+        }
+        button:active {
+            background-color: #e74c3c;
+            transform: scale(0.9);
+        }
+        .status {
+            margin-top: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #f1c40f;
+            animation: fadeIn 1s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Adivina el Número</h1>
+        <p>Intenta adivinar el número entre 1 y 10:</p>
+        <input type="number" id="guess" min="1" max="10" placeholder="Ingresa un número">
+        <button id="submit">Enviar</button>
+        <div class="status" id="status"></div>
+    </div>
+
+    <script>
+        const randomNumber = Math.floor(Math.random() * 10) + 1;
+
+        document.getElementById('submit').addEventListener('click', function() {
+            const guess = parseInt(document.getElementById('guess').value);
+            const status = document.getElementById('status');
+            
+            if (isNaN(guess) || guess < 1 || guess > 10) {
+                status.textContent = 'Por favor, ingresa un número entre 1 y 10.';
+                status.style.color = '#e74c3c'; // Color de error
+                return;
+            }
+
+            if (guess === randomNumber) {
+                status.textContent = '¡Felicidades! Adivinaste el número.';
+                status.style.color = '#2ecc71'; // Color de éxito
+            } else {
+                status.textContent = `Lo siento, el número era ${randomNumber}. Inténtalo de nuevo.`;
+                status.style.color = '#e67e22'; // Color de advertencia
+            }
+        });
+    </script>
+</body>
+</html>
